@@ -17,12 +17,18 @@ numpy.random.seed(7)
 # load pima indians dataset
 dataset = numpy.loadtxt("pima-indians-diabetes.csv", delimiter=",")
 # split into input (X) and output (Y) variables
-X = dataset[:,0:8]
-Y = dataset[:,8]
+X = dataset[:,0:8]    # X is a numpy array. # X.shape (768, 8)
+Y = dataset[:,8]      # Y is a numpy array. # Y.shape ( 768, 1)
+
+# we are going to create 4 layer model. So, we are adding 3 layers with input layer
+# (768 * 8), ( __ * 12), ( __ * 8), ( __ * 1)        # Final output: (768, 1)
+# In matrix multiplication, column of A, row of B would be same. 
+# So, we are only mentioning column number
+
 
 # create model
 model = Sequential()
-model.add(Dense(12, input_dim=8, activation='relu'))
+model.add(Dense(12, input_dim=8, activation='relu'))    # Here, we don't need to mention row number
 model.add(Dense(8, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 
@@ -41,7 +47,7 @@ model.fit(X, Y, epochs=150, batch_size=10)
 
 
 # evaluate the model
-scores = model.evaluate(X, Y)
+scores = model.evaluate(X, Y)       # You can use different matrix to evaluate
 print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 
 print ("\nPrediction\n")
